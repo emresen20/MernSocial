@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import {Grid,CircularProgress} from '@mui/material'
+import Post from './Post'
 
 function Posts() {
   const posts=useSelector((state)=>{
@@ -14,7 +15,8 @@ function Posts() {
         {
           posts.map((post)=>(
             <Grid key={post._id} item xs={12} sm={4}>   
-              {post.title}
+              
+              <Post post={post} />
 
             </Grid>
           ))
