@@ -8,7 +8,7 @@ export default (posts=[],action)=>{
             
     
         case 'CREATE':
-            return posts;
+            return [action.payload,...posts]
 
         default:
             return posts;

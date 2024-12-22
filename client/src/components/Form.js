@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Paper, TextField, Button, Typography } from "@mui/material";
-import FileBase from "react-file-base64";
+import { useDispatch } from "react-redux";
+import { createPost } from "../actions/posts";
 
 function Form() {
   const [postData, setPostData] = useState({
@@ -21,9 +22,11 @@ function Form() {
     });
   };
 
+  const dispatch=useDispatch();
+
   const handleSumbit = (e) => {
     e.preventDefault(); //e.preventDefault() çağrısı, formun tarayıcı tarafından yeniden yüklenmesini engeller. Bu sayede, sayfa yenilenmeden formun verilerini işlemek mümkün
-    console.log(postData);
+    dispatch(createPost(postData))
   };
 
   return (
