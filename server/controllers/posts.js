@@ -4,7 +4,9 @@ import PostMessage from '../models/PostMessage.js'
 
 const getPosts= async (req,res)=>{
     try {
-        const postMessage = await PostMessage.find();
+        const postMessage = await PostMessage.find().sort({
+            createdAt:-1
+        });
         res.status(200).json(postMessage)
     } catch (error) {
         res.status(404).json({message:error.message})
