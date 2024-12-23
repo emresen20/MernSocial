@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Paper, TextField, Button, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { createPost } from "../actions/posts";
@@ -12,6 +12,8 @@ function Form() {
     selectedFile: "",
   });
 
+  const fileInputRef = useRef(null); // Dosya inputu için referans
+
   const cleanIt = () => {
     setPostData({
       creator: "",
@@ -20,13 +22,18 @@ function Form() {
       tags: "",
       selectedFile: "",
     });
+
+    // Dosya inputunu sıfırla
+    if (fileInputRef.current) {
+      fileInputRef.current.value = null;
+    }
   };
 
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
 
   const handleSumbit = (e) => {
-    e.preventDefault(); //e.preventDefault() çağrısı, formun tarayıcı tarafından yeniden yüklenmesini engeller. Bu sayede, sayfa yenilenmeden formun verilerini işlemek mümkün
-    dispatch(createPost(postData))
+    e.preventDefault(); // Sayfa yenilenmesini engeller
+    dispatch(createPost(postData));
   };
 
   return (
@@ -63,7 +70,6 @@ function Form() {
           value={postData.title}
           onChange={(e) =>
             setPostData({
-              // e ile içindeki veriyi alıyoruz yani yazdığımız kısmı
               ...postData,
               title: e.target.value,
             })
@@ -95,12 +101,13 @@ function Form() {
           onChange={(e) =>
             setPostData({
               ...postData,
-              tags: e.target.value.split(','),
+              tags: e.target.value.split(","),
             })
           }
         />
         <div style={{ width: "97%", margin: "10px auto" }}>
-          <input // base 64 e çeviren kod
+          <input //base64 çalışmadığından base 64 e çevirme koduß
+            ref={fileInputRef} // Dosya inputuna referans ekledik
             type="file"
             onChange={(e) => {
               const file = e.target.files[0];
@@ -111,7 +118,9 @@ function Form() {
                   selectedFile: reader.result,
                 }));
               };
-              reader.readAsDataURL(file);
+              if (file) {
+                reader.readAsDataURL(file);
+              }
             }}
           />
         </div>
