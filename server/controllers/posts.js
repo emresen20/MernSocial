@@ -53,13 +53,42 @@ const updatePost = async (req, res) => {
     }
 };
 
-const deletePost= async (req,res)=>{
-    const { id: _id } = req.params; //http istekteki iddir
+const deletePost = async (req, res) => {
+    const { id: _id } = req.params; // HTTP isteğindeki "id" parametresini alıyoruz
+  
+    // ID'nin geçerliliğini kontrol et
     if (!mongoose.Types.ObjectId.isValid(_id)) {
+      return res.status(404).json({ message: 'Geçersiz Post ID' }); // Geçerli bir MongoDB ObjectId değilse
+    }
+  
+    try {
+      // Veritabanından post'u sil
+      const deletedPost = await PostMessage.findByIdAndDelete(_id);
+  
+      // Eğer silinmek istenen post bulunamazsa
+      if (!deletedPost) {
+        return res.status(404).json({ message: 'Post bulunamadı' });
+      }
+  
+      // Başarılı silme mesajı
+      res.status(200).json({ message: 'Post başarıyla silindi' });
+    } catch (error) {
+      // Hata yönetimi
+      res.status(500).json({ message: 'Post silinirken bir hata oluştu', error: error.message });
+    }
+  };
+
+
+
+const likePost=async (req,res)=>{
+    const {id} = req.params; //http istekteki iddir
+    if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).send('Post bulunamadı'); // ID geçerli değilse hata döndür
     }
-    await PostMessage.findByIdAndDelete(_id);
-    res.status(200).json({message:'Post Silindi'})
+    const post= await PostMessage.findById(id)
+    const updatedPost=await PostMessage.findByIdAndUpdate(id,{likeCount:post.likeCount+1},{new:true})
+
+    res.status(200).json(updatedPost)
 }
 
 
@@ -69,5 +98,6 @@ export {
     getPosts,
     createPost,
     updatePost,
-    deletePost
+    deletePost,
+    likePost
 }
