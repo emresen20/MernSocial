@@ -4,6 +4,7 @@ import Form from './components/Form';
 import { useEffect, useState } from 'react';
 import { getPosts } from './actions/posts';
 import { useDispatch } from 'react-redux';
+import Navbar from './components/Navbar';
 
 function App() {
 
@@ -17,9 +18,7 @@ function App() {
 
   return (
     <Container maxWidth='lg'>
-      <AppBar sx={{ marginBottom: '15px', backgroundColor: '#778da9', position: 'static', color: 'inherit' }}>
-        <Typography variant='h2' align='center'>Shen Social</Typography>
-      </AppBar>
+      <Navbar/>
       <Grow in>
         <Container>
           <Grid container justifyContent='space-between' alignItems='stretch' spacing={3}>
