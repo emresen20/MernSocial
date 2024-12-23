@@ -29,8 +29,8 @@ const createPost= async (req,res)=>{
 }
 
 const updatePost = async (req, res) => {
-    const { id: _id } = req.params; // Güncellenecek postun ID'si
-    const updatedPostData = req.body; // Yeni gelen post verisi
+    const { id: _id } = req.params; // Güncellenecek postun ID'si http deki id 
+    const updatedPostData = req.body; // Yeni gelen post verisi body de istek atarkenki
 
     if (!mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(404).send('Post bulunamadı'); // ID geçerli değilse hata döndür
@@ -53,11 +53,21 @@ const updatePost = async (req, res) => {
     }
 };
 
+const deletePost= async (req,res)=>{
+    const { id: _id } = req.params; //http istekteki iddir
+    if (!mongoose.Types.ObjectId.isValid(_id)) {
+        return res.status(404).send('Post bulunamadı'); // ID geçerli değilse hata döndür
+    }
+    await PostMessage.findByIdAndDelete(_id);
+    res.status(200).json({message:'Post Silindi'})
+}
+
 
 
 
 export {
     getPosts,
     createPost,
-    updatePost
+    updatePost,
+    deletePost
 }
