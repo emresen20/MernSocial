@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Paper, TextField, Button, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { createPost } from "../actions/posts";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost,updatePost } from "../actions/posts";
 
-function Form() {
+function Form({setCurrentId,currentId}) {
   const [postData, setPostData] = useState({
     creator: "",
     title: "",
@@ -23,17 +23,36 @@ function Form() {
       selectedFile: "",
     });
 
+    setCurrentId(null)
     // Dosya inputunu sıfırla
     if (fileInputRef.current) {
       fileInputRef.current.value = null;
     }
   };
+  const post = useSelector((state) =>
+    currentId && state.posts
+      ? state.posts.find((p) => String(p._id) === String(currentId))
+      : null
+  );
+
+  useEffect(()=>{ //buradaki statemizi eski veriler ile doldurup onun üzerinden güncelleyebilmek için yapıldı
+    if(post) setPostData(post)
+  },[post])
 
   const dispatch = useDispatch();
 
+ 
+   //reduxtaki statemize eriştik ekle bölmesinde verilerin gelebilmesi için yaptık
+
   const handleSumbit = (e) => {
     e.preventDefault(); // Sayfa yenilenmesini engeller
-    dispatch(createPost(postData));
+    if(currentId){ //currentid dolu ise güncelle demek oluyor 
+      dispatch(updatePost(currentId,postData))
+    }
+    else{ //curentid boş ise yeni ekle demek oluyor
+      dispatch(createPost(postData));
+    }
+    cleanIt()
   };
 
   return (
@@ -45,7 +64,7 @@ function Form() {
         onSubmit={handleSumbit}
       >
         <Typography sx={{ marginBottom: "10px" }} variant="h6">
-          Post Ekle
+          {currentId ? 'Post Güncelle ' : 'Post Ekle' }
         </Typography>
         <TextField
           sx={{ margin: "5px" }}
@@ -133,7 +152,7 @@ function Form() {
           type="submit"
           fullWidth
         >
-          Ekle
+          {currentId ? 'Güncelle ' : 'Ekle' }
         </Button>
         <Button
           sx={{ marginBottom: "10px" }}
