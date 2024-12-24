@@ -82,11 +82,22 @@ const deletePost = async (req, res) => {
 
 const likePost=async (req,res)=>{
     const {id} = req.params; //http istekteki iddir
+
+    if(!req.userId) return res.json({message:'Yetkisiz Giriş'})
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(404).send('Post bulunamadı'); // ID geçerli değilse hata döndür
     }
-    const post= await PostMessage.findById(id)
-    const updatedPost=await PostMessage.findByIdAndUpdate(id,{likeCount:post.likeCount+1},{new:true})
+    const post= await PostMessage.findById(id) //idyegöre postu getiriyor
+
+    const index=post.likes.findIndex((id)=>id===String(req.userId)) // likes dizisinde giriş yapılmış kullanıcı var mı diye bakılıyor varsa 1 yoksa -1 döner
+    if(index===-1){
+        post.likes.push(req.userId)
+    }else{
+        post.likes=post.likes.filter((id)=>id!==String(req.userId)) //bizim id hariç diğerlerini filtreler
+    }
+
+    const updatedPost=await PostMessage.findByIdAndUpdate(id,post,{new:true})
 
     res.status(200).json(updatedPost)
 }
