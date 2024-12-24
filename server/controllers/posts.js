@@ -16,7 +16,7 @@ const getPosts= async (req,res)=>{
 const createPost= async (req,res)=>{
     const post=req.body; // req.body frondent veya postmanda veridiğimiz şeyleri yakalar
 
-    const newPost=new PostMessage(post); //modelimizi oluşturduk buraya frontendden gelen verileri ekledik
+    const newPost=new PostMessage({...post,creator:req.userId,createdAt:new Date().toISOString()}); //modelimizi oluşturduk buraya frontendden gelen verileri ekledik
 
     try {
         await newPost.save();

@@ -5,7 +5,6 @@ import { createPost,updatePost } from "../actions/posts";
 
 function Form({setCurrentId,currentId}) {
   const [postData, setPostData] = useState({
-    creator: "",
     title: "",
     message: "",
     tags: "",
@@ -40,6 +39,7 @@ function Form({setCurrentId,currentId}) {
   },[post])
 
   const dispatch = useDispatch();
+  const user=JSON.parse(localStorage.getItem('profile'))
 
  
    //reduxtaki statemize eriştik ekle bölmesinde verilerin gelebilmesi için yaptık
@@ -47,14 +47,23 @@ function Form({setCurrentId,currentId}) {
   const handleSumbit = (e) => {
     e.preventDefault(); // Sayfa yenilenmesini engeller
     if(currentId){ //currentid dolu ise güncelle demek oluyor 
-      dispatch(updatePost(currentId,postData))
+      dispatch(updatePost(currentId,{...postData,name:user?.result?.name}))
     }
     else{ //curentid boş ise yeni ekle demek oluyor
-      dispatch(createPost(postData));
+      dispatch(createPost({...postData,name:user?.result?.name}));
     }
     cleanIt()
   };
 
+  if(!user?.result?.name){
+    return(
+      <Paper sx={{ backgroundColor: "#edede9" }}>
+        <Typography variant="h4" align="center">
+           Post Eklemek İçin Lütfen Giriş yapınız
+        </Typography>
+      </Paper>
+    )
+  }
   return (
     <Paper sx={{ backgroundColor: "#edede9" }}>
       <form
@@ -66,20 +75,6 @@ function Form({setCurrentId,currentId}) {
         <Typography sx={{ marginBottom: "10px" }} variant="h6">
           {currentId ? 'Post Güncelle ' : 'Post Ekle' }
         </Typography>
-        <TextField
-          sx={{ margin: "5px" }}
-          name="creator"
-          variant="outlined"
-          label="Oluşturan"
-          fullWidth
-          value={postData.creator}
-          onChange={(e) =>
-            setPostData({
-              ...postData,
-              creator: e.target.value,
-            })
-          }
-        />
         <TextField
           sx={{ margin: "5px" }}
           name="title"

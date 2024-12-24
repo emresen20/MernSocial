@@ -15,7 +15,8 @@ const postSchema=mongoose.Schema({
     createdAt:{
         type:Date,
         default: () => new Date()
-    }
+    },
+    name:String
 })
 
 const PostMessage=mongoose.model('Post',postSchema)
