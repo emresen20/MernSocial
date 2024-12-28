@@ -2,11 +2,16 @@ import React, { useState } from 'react'
 import {LockPerson} from '@mui/icons-material'
 import Input from '../components/Input'
 import { Avatar, Button, Container, Grid, Paper, Typography } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+import {signup} from '../actions/auth'
 
 const initialState={email:'',password:'',firstName:'',lastName:'',confirmPassword:''}
 
 function SignUp() {
+
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
 
   const [form,setForm]=useState(initialState)
   const [showPassword,setShowPassword]=useState(false)
@@ -21,7 +26,8 @@ function SignUp() {
 
   const handleSumbit=(e)=>{
     e.preventDefault();
-    console.log(form)
+    dispatch(signup(form,navigate))
+    
   }
 
 
