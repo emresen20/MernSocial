@@ -1,10 +1,22 @@
 import React, {  useEffect, useState } from 'react'
 import {AppBar,Button,Toolbar,Typography,Avatar} from '@mui/material'
-import {Link,useLocation} from 'react-router-dom'
+import {Link,useLocation,useNavigate} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+import * as actionType from '../constants/actionTypes'
+
 
 function Navbar() {
   const [user,setUser]=useState(JSON.parse(localStorage.getItem('profile')))
   const location=useLocation();//uygulamada user değ,işikliğinde anlık olarak veri güncellemesinde kullanılır
+
+  const navigate=useNavigate();
+  const dispatch=useDispatch();
+
+  const logout=()=>{
+   dispatch({type:actionType.LOGOUT})
+   navigate('/signin')
+   setUser(null)
+  }
 
   useEffect(()=>{
     setUser(JSON.parse(localStorage.getItem('profile')))
@@ -41,7 +53,7 @@ function Navbar() {
             <Avatar >
               {user?.result.name.charAt(0)}
             </Avatar>
-            <Button variant='contained' color='secondary'>Çıkış Yap</Button>
+            <Button variant='contained' color='secondary' onClick={logout}>Çıkış Yap</Button>
           </div>
         ):(
            <Button component={Link} to='/signin' variant='contained' color='secondary'>
