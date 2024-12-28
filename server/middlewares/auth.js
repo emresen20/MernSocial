@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 
-const auth = (req, res, next) => {
+const auth = (req, res, next) => { //authorizationda baerer token kullanarak işlemlerimiizi gerçekkleştirdiğimizden dolayı headerste token bilgisi yüklü olmalı
+  //kullancı bilgisini artık diğer fonksiyonlarımıza da aktarmış olduk
+  
   try {
     const token = req.headers.authorization?.split(" ")[1]; // Bearer token
     if (!token) {
@@ -8,8 +10,8 @@ const auth = (req, res, next) => {
     }
 
     // Token doğrulama
-    const decodedData = jwt.verify(token, 'emre-secret-key');
-    req.userId = decodedData?.id;
+    const decodedData = jwt.verify(token, 'emre-secret-key'); //token doğrulama
+    req.userId = decodedData?.id; // isteğin içerisine userId bilgisini aktarıyoruz
 
     next(); // İşleme devam et
   } catch (error) {

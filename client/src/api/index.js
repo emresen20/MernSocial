@@ -7,8 +7,8 @@ const url='/posts'
 const API=axios.create({baseURL:'http://localhost:6000'}) //bu apiyi aşağıda kullanuyoruz çünkü authorazationu eklemek istiyoruz
 
 API.interceptors.request.use((req)=>{
-    if(localStorage.getItem('profile')){
-        req.headers.Authorization=`Bearer ${JSON.parse(localStorage.getItem('profile')).token}`
+    if(localStorage.getItem('profile')){ //localde profilede veri var mı ?
+        req.headers.Authorization=`Bearer ${JSON.parse(localStorage.getItem('profile')).token}` // bu bilgiyi headersata Authorizationı dolduruyoruz
     }
     return req
 })

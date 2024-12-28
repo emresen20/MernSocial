@@ -17,7 +17,7 @@ const signin=async (req,res)=>{
             ) 
         }
 
-        const passwordControlResult=await bcrypt.compare(password,user.password)
+        const passwordControlResult=await bcrypt.compare(password,user.password) // parola şifreli olduğundan dolayı burada kontrol ettiriyoruz
         if(!passwordControlResult){
             return(
                 res.status(400).json({message:'Parolayı Doğru giriniz'})
@@ -26,7 +26,7 @@ const signin=async (req,res)=>{
 
         const token = jwt.sign({email:user.email, id:user._id},'emre-secret-key',{expiresIn:'3h'})
 
-        res.status(200).json({result:user,token})
+        res.status(200).json({result:user,token}) // user ve tokeni döndürüyoruz
 
     } catch (error) {
         res.status(500).json({message:'Bir Hata oluştu daha sonra tekrar deneyiniz'})
@@ -36,7 +36,8 @@ const signin=async (req,res)=>{
 }
 
 const signup=async (req,res)=>{
-    const {email,
+    const {
+        email,
         password,
         confirmPassword,
         firstName,
@@ -50,7 +51,7 @@ const signup=async (req,res)=>{
         
         if(password !== confirmPassword) return res.status(400).json({message:'Parolalar uyuşmadı'})
 
-         const hashedPassword=await bcrypt.hash(password,12)   
+        const hashedPassword=await bcrypt.hash(password,12)   // paroloyı şifreliyoruz
         const result=await User.create({email,password:hashedPassword,name:`${firstName} ${lastName}`});
         const token = jwt.sign({email:result.email,id:result._id},'emre-secret-key',{expiresIn:'3h'})
         res.status(200).json({result,token})

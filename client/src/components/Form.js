@@ -15,7 +15,6 @@ function Form({setCurrentId,currentId}) {
 
   const cleanIt = () => {
     setPostData({
-      creator: "",
       title: "",
       message: "",
       tags: "",
@@ -39,7 +38,7 @@ function Form({setCurrentId,currentId}) {
   },[post])
 
   const dispatch = useDispatch();
-  const user=JSON.parse(localStorage.getItem('profile'))
+  const user=JSON.parse(localStorage.getItem('profile')) //buradan userı alıyoruz
 
  
    //reduxtaki statemize eriştik ekle bölmesinde verilerin gelebilmesi için yaptık
