@@ -7,7 +7,7 @@ import {
   CardMedia,
   Typography,
 } from "@mui/material";
-import { ThumbUp, Delete, MoreHoriz } from "@mui/icons-material";
+import { ThumbUp, Delete, MoreHoriz, ThumbDown } from "@mui/icons-material";
 import moment from "moment";
 import "moment/locale/tr";
 import {useDispatch} from 'react-redux'
@@ -15,6 +15,17 @@ import { deletePost, likePost } from "../actions/posts";
 
 function Post({ post,setCurrentId}) {
   const dispatch=useDispatch();
+
+  const user=JSON.parse(localStorage.getItem('profile'))
+
+  const LikeControles=()=>{
+    if(post.likes.length>0){
+        return post.likes.find(likedId=>likedId===user?.result?._id) ? (
+          <> <ThumbDown fontSize="small" color="secondary"/>&nbsp; {post.likes.length} </>
+        ) :( <> <ThumbUp fontSize="small"/>&nbsp; {post.likes.length} </>)
+    }
+    return <><ThumbUp fontSize="small"/>&nbsp; 0 </>
+  }
 
   return (
     <Card
@@ -46,7 +57,7 @@ function Post({ post,setCurrentId}) {
           left: "20px",
         }}
       >
-        <Typography variant="h6">{post.creator}</Typography>
+        <Typography variant="h6">{post.name}</Typography>
         <Typography variant="body2">
           {moment(post.createdAt).fromNow()}
         </Typography>
@@ -94,8 +105,8 @@ function Post({ post,setCurrentId}) {
             display:'flex',
             justifyContent:'space-between'
         }}>
-            <Button size="small" color="primary" onClick={()=> dispatch(likePost(post._id))}>
-                <ThumbUp fontSize="small" sx={{marginRight:'2px'}}/> {post.likeCount} 
+            <Button size="small" color="primary" onClick={()=> dispatch(likePost(post._id))} disabled={!user?.result}>
+                <LikeControles/>
             </Button>
             <Button size="small" color="secondary" onClick={()=> dispatch(deletePost(post._id))}>
                 <Delete fontSize="small" color="secondary" />

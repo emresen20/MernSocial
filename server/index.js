@@ -18,7 +18,7 @@ app.use('/user',userRoutes)
 
 const MONGO_URI='mongodb+srv://emrekod01:123456789asD.@clustersocial.fqfzb.mongodb.net/SocaialDb'
 
-const PORT=6000;
+const PORT=3000;
 
 mongoose.connect(MONGO_URI)
     .then(()=>{

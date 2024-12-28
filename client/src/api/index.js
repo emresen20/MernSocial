@@ -4,7 +4,7 @@ import axios from 'axios'
 
 const url='/posts'
 
-const API=axios.create({baseURL:'http://localhost:6000'}) //bu apiyi aşağıda kullanuyoruz çünkü authorazationu eklemek istiyoruz
+const API=axios.create({baseURL:'http://localhost:3000'}) //bu apiyi aşağıda kullanuyoruz çünkü authorazationu eklemek istiyoruz
 
 API.interceptors.request.use((req)=>{
     if(localStorage.getItem('profile')){ //localde profilede veri var mı ?
