@@ -63,7 +63,8 @@ function Post({ post,setCurrentId}) {
         </Typography>
       </div>
       <div>
-        <Button
+        {(user?.result?._id===post?.creator) && (
+          <Button
           sx={{
             position: "absolute",
             top: "20px",
@@ -75,6 +76,7 @@ function Post({ post,setCurrentId}) {
         >
           <MoreHoriz />
         </Button>
+        )}
       </div>
       <div>
         <Typography
@@ -108,9 +110,13 @@ function Post({ post,setCurrentId}) {
             <Button size="small" color="primary" onClick={()=> dispatch(likePost(post._id))} disabled={!user?.result}>
                 <LikeControles/>
             </Button>
-            <Button size="small" color="secondary" onClick={()=> dispatch(deletePost(post._id))}>
+            {
+              (user?.result?._id===post?.creator) &&(
+                <Button size="small" color="secondary" onClick={()=> dispatch(deletePost(post._id))}>
                 <Delete fontSize="small" color="secondary" />
             </Button>
+              )
+            }
 
         </CardActions>
     </Card>
