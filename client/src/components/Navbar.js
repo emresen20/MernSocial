@@ -3,6 +3,8 @@ import {AppBar,Button,Toolbar,Typography,Avatar} from '@mui/material'
 import {Link,useLocation,useNavigate} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import * as actionType from '../constants/actionTypes'
+import { jwtDecode } from 'jwt-decode';
+
 
 
 function Navbar() {
@@ -18,9 +20,17 @@ function Navbar() {
    setUser(null)
   }
 
-  useEffect(()=>{
-    setUser(JSON.parse(localStorage.getItem('profile')))
-  },[location])
+  useEffect(() => {
+    const token = user?.token;
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      if(decodedToken.exp*1000<new Date().getTime()){
+        logout()
+      }
+    }
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [location]);
+
 
   return (
     <AppBar sx={{
