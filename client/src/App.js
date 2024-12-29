@@ -4,18 +4,23 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes,Navigate } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 
 function App() {
+
+  const user=JSON.parse(localStorage.getItem('profile'))
+
   return (
     <BrowserRouter>
       <Container maxWidth="lg">
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/signin" element={<Signin/>}/>
-          <Route path="/signup" element={<SignUp/>}/>
+          <Route path="/" element={<Navigate to={"/posts"}/>} />
+          <Route path="/posts" element={<Home/>} />
+          <Route path="/serach/posts" element={<Home/>} />
+          <Route path="/signin" element={!user ? <Signin/> : <Navigate to={"/posts"}/> }/>
+          <Route path="/signup" element={!user ? <SignUp/> : <Navigate to={"/posts"}/> }/>
         </Routes>
       </Container>
     </BrowserRouter>
