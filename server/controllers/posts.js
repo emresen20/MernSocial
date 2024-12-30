@@ -102,6 +102,19 @@ const likePost=async (req,res)=>{
     res.status(200).json(updatedPost)
 }
 
+const getPostBySearch=async (req,res)=>{
+    const {searchQuery}=req.query //url/search?searcgQuery=post
+
+    try {
+        const title=new RegExp(searchQuery,'i')  //EMRE emre Emre hepsini otomatik olarak titleye ekler aynı olarak
+        const posts=await PostMessage.find({title})
+
+        res.json({data:posts})
+    } catch (error) {
+        res.status(404).json({message:error})
+    }
+}
+
 
 
 
@@ -110,5 +123,6 @@ export {
     createPost,
     updatePost,
     deletePost,
-    likePost
+    likePost,
+    getPostBySearch
 }

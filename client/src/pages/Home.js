@@ -42,7 +42,8 @@ function Home() {
             </Grid>
             <Grid item xs={12} sm={4}>
               <AppBar sx={{borderRadius:4,marginBottom:'1rem', display:'flex', padding:'8px', backgroundColor:'#e9ecef'}} position='static' color='inherit' >
-                <TextField name='search' variant='outlined' label="Post Ara" fullWidth value={serach} onChange={(e)=>setSerach(e.target.value)} onKeyDown={handleKeyPress}/> 
+                <TextField name='search' variant='outlined' label="Post Ara" fullWidth value={serach} onChange={(e)=>setSerach(e.target.value)} 
+                onKeyDown={handleKeyPress}/> 
               </AppBar>
               <Form setCurrentId={setCurrentId} currentId={currentId}/>
               <Paper sx={{borderRadius:4,marginTop:'1rem',padding:'16px'}} elevation={6}>
