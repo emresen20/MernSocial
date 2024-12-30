@@ -28,8 +28,8 @@ function Form({setCurrentId,currentId}) {
     }
   };
   const post = useSelector((state) =>
-    currentId && state.posts
-      ? state.posts.find((p) => String(p._id) === String(currentId))
+    currentId && state.posts.posts
+      ? state.posts.posts.find((p) => String(p._id) === String(currentId))
       : null
   );
 

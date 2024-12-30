@@ -3,9 +3,9 @@
 import * as api from '../api'
 import {CREATE,UPDATE,FETCH_ALL,LIKE,DELETE,FETCH_BY_SEARCH} from '../constants/actionTypes'
 
-export const getPosts= ()=> async (dispatch)=>{
+export const getPosts= (page)=> async (dispatch)=>{
     try {
-        const {data} = await api.getPosts();  //axiosta dönen veriler data içinde durur
+        const {data} = await api.getPosts(page);  //axiosta dönen veriler data içinde durur
         const action={type:FETCH_ALL,payload:data}
         dispatch(action)
         console.log('data',data)

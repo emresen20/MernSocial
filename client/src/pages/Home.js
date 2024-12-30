@@ -5,7 +5,11 @@ import Form from '../components/Form';
 import { useDispatch } from 'react-redux';
 import { getPosts,getPostsBySearch } from '../actions/posts';
 import Paginate from '../components/Pagination';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
+
+function useQuery(){
+  return new URLSearchParams(useLocation().search)
+}
 
 function Home() {
 
@@ -14,10 +18,16 @@ function Home() {
   const [currentId,setCurrentId]=useState(null) //currentid yi posts a yolladık orada da propslayıp post doldurduk
   const [search,setSearch]=useState('')
 
-  useEffect(() => {
-    dispatch(getPosts());
-    console.log('curennt id',currentId)
-  }, [dispatch,currentId]);
+  const query=useQuery();
+  const page=query.get('page') || 1;
+  const searchQuery=query.get('searchQuery')
+
+  // useEffect(() => {
+  //   dispatch(getPosts());
+  //   console.log('curennt id',currentId)
+  // }, [dispatch,currentId]);
+
+
 
   const searchPost=()=>{
     if(search.trim()){ //trim baştaki ve sondaki boşlukları kaldırna bir javascript metodudur.
@@ -48,7 +58,7 @@ function Home() {
               </AppBar>
               <Form setCurrentId={setCurrentId} currentId={currentId}/>
               <Paper sx={{borderRadius:4,marginTop:'1rem',padding:'16px'}} elevation={6}>
-                <Paginate/>
+                <Paginate page={page}/>
               </Paper>
             </Grid>
           </Grid>

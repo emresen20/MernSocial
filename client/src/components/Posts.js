@@ -4,13 +4,15 @@ import {Grid,CircularProgress} from '@mui/material'
 import Post from './Post'
 
 function Posts({setCurrentId}) {
-  const posts=useSelector((state)=>{
+  
+  const {posts}=useSelector((state)=>{
+    console.log(state)
     return state.posts
 
   })
   console.log(posts)
   return (
-    !posts.length ? <CircularProgress/>:(
+    !posts?.length ? <CircularProgress/>:(
       <Grid container alignItems="stretch" spacing={3}>
         {
           posts.map((post)=>(

@@ -13,8 +13,8 @@ API.interceptors.request.use((req)=>{
     return req
 })
 
-export const getPosts=()=>{
-    return axios.get(url)
+export const getPosts=(page)=>{
+    return axios.get(`${url}/?page=${page}`)
 }
 
 export const postCrate=(newPost)=> API.post(url,newPost)
