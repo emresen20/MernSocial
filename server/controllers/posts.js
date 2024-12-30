@@ -3,11 +3,15 @@ import mongoose from 'mongoose';
 import PostMessage from '../models/PostMessage.js'
 
 const getPosts= async (req,res)=>{
+    const {page}=req.query
     try {
-        const postMessage = await PostMessage.find().sort({
-            createdAt:-1
-        });
-        res.status(200).json(postMessage)
+        const LIMIT=4;
+        const startIndex=(Number(page)-1)*LIMIT;
+        const totalPost=await PostMessage.countDocuments({}) //db de kaç tane veri var
+
+        const posts=await PostMessage.find().sort({_id:-1}).limit(LIMIT).skip(startIndex) //skip ile başlangıç indexini belirtir
+
+        res.status(200).json({data:posts,currentPage:page,numberOfPage:Math.ceil(totalPost/LIMIT)})
     } catch (error) {
         res.status(404).json({message:error.message})
     }
