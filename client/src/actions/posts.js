@@ -1,13 +1,15 @@
 
 
 import * as api from '../api'
-import {CREATE,UPDATE,FETCH_ALL,LIKE,DELETE,FETCH_BY_SEARCH} from '../constants/actionTypes'
+import {CREATE,UPDATE,FETCH_ALL,LIKE,DELETE,FETCH_BY_SEARCH,START_LOADING,END_LOADING} from '../constants/actionTypes'
 
 export const getPosts= (page)=> async (dispatch)=>{
     try {
+        dispatch({type:START_LOADING})
         const {data} = await api.getPosts(page);  //axiosta dönen veriler data içinde durur
         const action={type:FETCH_ALL,payload:data}
         dispatch(action)
+        dispatch({type:END_LOADING})
         console.log('data',data)
     } catch (error) {
             console.log(error.message)
@@ -16,8 +18,10 @@ export const getPosts= (page)=> async (dispatch)=>{
 
 export const createPost=(post)=> async (dispatch)=>{
     try {
+        dispatch({type:START_LOADING})
         const {data}=await api.postCrate(post)
         dispatch({type:CREATE,payload:data})
+        dispatch({type:END_LOADING})
     } catch (error) {
         console.log(error.message)
     }
@@ -53,8 +57,10 @@ export const likePost=(id)=>async (dispatch)=>{
 
 export const getPostsBySearch=(searchQuery)=>async (dispatch)=>{
     try {
+        dispatch({type:START_LOADING})
         const {data:{data}}=await api.getSearch(searchQuery);
         dispatch({type:FETCH_BY_SEARCH,payload:data})
+        dispatch({type:END_LOADING})
         console.log(data);
     } catch (error) {
         console.log(error)
