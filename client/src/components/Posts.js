@@ -5,14 +5,18 @@ import Post from './Post'
 
 function Posts({setCurrentId}) {
   
-  const {posts}=useSelector((state)=>{
+  const {posts,isLoading}=useSelector((state)=>{
     console.log(state)
     return state.posts
 
   })
+
+  if(!posts.length && !isLoading) return 'Henüz Post Eklenmedi'
+
+
   console.log(posts)
   return (
-    !posts?.length ? <CircularProgress/>:(
+    isLoading ? <CircularProgress/>:(
       <Grid container alignItems="stretch" spacing={3}>
         {
           posts.map((post)=>(

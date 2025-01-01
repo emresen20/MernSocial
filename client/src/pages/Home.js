@@ -57,9 +57,13 @@ function Home() {
                 onKeyDown={handleKeyPress}/> 
               </AppBar>
               <Form setCurrentId={setCurrentId} currentId={currentId}/>
-              <Paper sx={{borderRadius:4,marginTop:'1rem',padding:'16px'}} elevation={6}>
+              { !searchQuery && (
+                <Paper sx={{borderRadius:4,marginTop:'1rem',padding:'16px'}} elevation={6}>
                 <Paginate page={page}/>
               </Paper>
+              )
+
+              }
             </Grid>
           </Grid>
         </Container>
