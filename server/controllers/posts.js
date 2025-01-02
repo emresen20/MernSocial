@@ -120,6 +120,18 @@ const getPostBySearch=async (req,res)=>{
 }
 
 
+const getPost=async (req,res)=>{
+    const {id}=req.params;
+
+    try {
+        const post=await PostMessage.findById(id)
+        res.status(200).json(post)
+    } catch (error) {
+        res.status(404).json({message:error})
+        
+    }
+}
+
 
 
 export {
@@ -128,5 +140,6 @@ export {
     updatePost,
     deletePost,
     likePost,
-    getPostBySearch
+    getPostBySearch,
+    getPost
 }
