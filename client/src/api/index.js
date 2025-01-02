@@ -31,6 +31,8 @@ export const signUp=(formData)=>axios.post('/user/signup',formData)
 
 export const getSearch=(searchQuery)=>API.get(`/posts/search?searchQuery=${searchQuery.search || 'none'}`)
 
+export const getPost=(id)=>axios.get(`${url}/${id}`)
+
 
 
 // export const postUpdate=(id,updatedPostData)=>axios.patch(`${url}/${id}`,updatedPostData)  bunları değiştirdik API KOYDUIK

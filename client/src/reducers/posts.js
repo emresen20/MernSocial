@@ -1,5 +1,5 @@
 
-import {CREATE,UPDATE,FETCH_ALL,LIKE,DELETE,FETCH_BY_SEARCH,START_LOADING,END_LOADING} from '../constants/actionTypes'
+import {CREATE,UPDATE,FETCH_ALL,LIKE,DELETE,FETCH_BY_SEARCH,START_LOADING,END_LOADING,FETCH_POST} from '../constants/actionTypes'
 
 
 export default (state={isLoading:true,posts:[]},action)=>{
@@ -19,6 +19,13 @@ export default (state={isLoading:true,posts:[]},action)=>{
             currentPage:action.payload.currentPage,//backenden gelen verilere göre yazdım
             numberOfPage:action.payload.numberOfPage
         };
+
+        case FETCH_POST:
+
+        return{
+            ...state,
+            post:action.payload
+        }
             
     
         case CREATE:
