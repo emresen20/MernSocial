@@ -132,6 +132,16 @@ const getPost=async (req,res)=>{
     }
 }
 
+const getPostsByTags=async(req,res)=>{
+    const {tags}=req.params;
+    try {
+        const posts=await PostMessage.find({tags:{$in:tags.split(',')}})
+        res.json({data:posts})
+    } catch (error) {
+        res.status(404).json({message:error.message})
+    }
+}
+
 
 
 export {
@@ -141,5 +151,6 @@ export {
     deletePost,
     likePost,
     getPostBySearch,
-    getPost
+    getPost,
+    getPostsByTags
 }
