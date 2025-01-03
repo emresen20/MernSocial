@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import moment from "moment";
-import { getPost } from "../actions/posts";
-import { CircularProgress, Paper ,Typography,Divider} from "@mui/material";
+import { getPost, getsPostsByTags } from "../actions/posts";
+import { CircularProgress, Paper, Typography, Divider } from "@mui/material";
 
 export default function PostDetail() {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
@@ -13,6 +13,16 @@ export default function PostDetail() {
   useEffect(() => {
     dispatch(getPost(id));
   }, [id]);
+
+  useEffect(() => {
+    if (post) {
+      dispatch(getsPostsByTags(post?.tags.join(",")));
+    }
+  }, [post]);
+  //console.log('posts',posts)
+
+  const recommendPosts=posts.filter(({_id})=>_id!==post._id)//gelen datada bizim içinde olduğumuz postta olduğundan filteledik
+  console.log('recommendPosts',recommendPosts)
 
   if (!post) return null;
 
@@ -52,13 +62,13 @@ export default function PostDetail() {
           </Typography>
           <Divider style={{ margin: "20px 0" }} />
         </div>
-        <div sx={{ marginLeft: "20px" }}>
+        <div style={{ marginLeft: "20px", maxWidth: "300px" }}>
           <img
-            sx={{
+            style={{
               borderRadius: "20px",
               objectFit: "cover",
               width: "100%",
-              maxHeight: "300px",
+              height: "200px", // Resmin yüksekliği ayarlanabilir
             }}
             src={post.selectedFile}
             alt={post.title}

@@ -48,7 +48,7 @@ export default (state={isLoading:true,posts:[]},action)=>{
                 posts:action.payload
             }
 
-        case FETCH_BY_SEARCH:
+        case FETCH_BY_TAGS:
             return{
                 ...state,
                 posts:action.payload
