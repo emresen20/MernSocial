@@ -33,6 +33,8 @@ export const getSearch=(searchQuery)=>API.get(`/posts/search?searchQuery=${searc
 
 export const getPost=(id)=>axios.get(`${url}/${id}`)
 
+export const getPostsByTags=(tags)=>API.get(`/posts/tags/${tags}`)
+
 
 
 // export const postUpdate=(id,updatedPostData)=>axios.patch(`${url}/${id}`,updatedPostData)  bunları değiştirdik API KOYDUIK

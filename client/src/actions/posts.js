@@ -1,7 +1,7 @@
 
 
 import * as api from '../api'
-import {CREATE,UPDATE,FETCH_ALL,LIKE,DELETE,FETCH_BY_SEARCH,START_LOADING,END_LOADING,FETCH_POST} from '../constants/actionTypes'
+import {CREATE,UPDATE,FETCH_ALL,LIKE,DELETE,FETCH_BY_SEARCH,START_LOADING,END_LOADING,FETCH_POST,FETCH_BY_TAGS} from '../constants/actionTypes'
 
 export const getPosts= (page)=> async (dispatch)=>{
     try {
@@ -80,4 +80,18 @@ export const getPostsBySearch=(searchQuery)=>async (dispatch)=>{
         console.log(error)
     }
 }
+
+export const getsPostsByTags=(tags)=> async (dispatch)=>{
+    try {
+        dispatch({type:START_LOADING})
+        const {data:{data}}=await api.getPostsByTags(tags);
+        console.log(data);
+        dispatch({type:FETCH_BY_TAGS,payload:data})
+
+        dispatch({type:END_LOADING})
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
