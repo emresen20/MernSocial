@@ -108,13 +108,15 @@ const likePost=async (req,res)=>{
 
 const getPostBySearch=async (req,res)=>{
     const {searchQuery}=req.query //url/search?searcgQuery=post
-
+    console.log(searchQuery)
     try {
         const title=new RegExp(searchQuery,'i')  //EMRE emre Emre hepsini otomatik olarak titleye ekler aynı olarak
-        const posts=await PostMessage.find({title})
+       
+        const posts=await PostMessage.find({ title })
 
         res.json({data:posts})
     } catch (error) {
+        console.log(error)
         res.status(404).json({message:error})
     }
 }
