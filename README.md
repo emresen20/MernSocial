@@ -41,6 +41,12 @@ This is a full-stack social media application built using the **MERN stack** (Mo
 
 ---
 
+![resim](https://r.resimlink.com/i3ajI.png)
+
+![resim](https://r.resimlink.com/Q3IMW1iO6hn.png)
+
+![resim](https://r.resimlink.com/uQ8x9Ch.png)
+
 ## Installation
 
 ### Prerequisites
