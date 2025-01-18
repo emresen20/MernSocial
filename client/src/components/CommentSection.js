@@ -33,7 +33,8 @@ export default function CommentSection({ post }) {
           {comments.length > 0 ? (
             comments.map((c, i) => (
               <Typography key={i} gutterBottom variant="subtitle1">
-                {c}
+                <strong>{c.split(': ')[0]} : </strong>
+                {c.split(': ')[1]}
               </Typography>
             ))
           ) : (

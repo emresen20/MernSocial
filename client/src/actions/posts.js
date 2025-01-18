@@ -100,7 +100,7 @@ export const commentPost=(value,id)=> async (dispatch)=>{
         const {data}= await api.CreateCommnet(value,id);
         console.log(data);
         dispatch({type:COMMENT,payload:data})
-        return data.comments
+        return data.comments.reverse()
     } catch (error) {
         console.log(error)
     }
