@@ -94,4 +94,14 @@ export const getsPostsByTags=(tags)=> async (dispatch)=>{
     }
 }
 
+export const commentPost=(value,id)=> async (dispatch)=>{
+    
+    try {
+        const {data}= await api.CreateCommnet(value,id);
+        console.log(data);
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 

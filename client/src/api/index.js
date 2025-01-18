@@ -35,6 +35,8 @@ export const getPost=(id)=>axios.get(`${url}/${id}`)
 
 export const getPostsByTags=(tags)=>API.get(`/posts/tags/${tags}`)
 
+export const CreateCommnet=(value,id)=> API.post(`${url}/${id}/commentPost`,{value})
+
 
 
 // export const postUpdate=(id,updatedPostData)=>axios.patch(`${url}/${id}`,updatedPostData)  bunları değiştirdik API KOYDUIK
