@@ -16,7 +16,11 @@ const postSchema=mongoose.Schema({
         type:Date,
         default: () => new Date()
     },
-    name:String
+    name:String,
+    comments:{
+        type:[String],
+        default:[]
+    }
 })
 
 const PostMessage=mongoose.model('Post',postSchema)

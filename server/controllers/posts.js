@@ -145,6 +145,19 @@ const getPostsByTags=async(req,res)=>{
 }
 
 
+const commentPost=async (req,res)=>{
+    const {id}= req.params; //host.... daki id yi alıyor
+    const {value}=req.body; // frontta verilen stadekini alıyor
+
+    const post=await PostMessage.findById(id);
+    post.comments.push(value);
+
+    const updatedPost=await PostMessage.findByIdAndUpdate(id,post,{new:true}) // id yi istiyor, güncellenmiş yerleri istiyor,birde yeni veriyi döndermek istiyoruz
+
+    res.json(updatedPost) // burada da güncellenmiş postu döndürmüş olduk
+}
+
+
 
 export {
     getPosts,
@@ -154,5 +167,6 @@ export {
     likePost,
     getPostBySearch,
     getPost,
-    getPostsByTags
+    getPostsByTags,
+    commentPost,
 }
