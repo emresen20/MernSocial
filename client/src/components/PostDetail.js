@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import { getPost, getsPostsByTags } from "../actions/posts";
 import { CircularProgress, Paper, Typography, Divider } from "@mui/material";
+import CommentSection from "./CommentSection";
 
 export default function PostDetail() {
   const { post, posts, isLoading } = useSelector((state) => state.posts);
@@ -63,9 +64,7 @@ export default function PostDetail() {
             {moment(post.createdAt).fromNow()}
           </Typography>
           <Divider style={{ margin: "20px 0" }} />
-          <Typography variant="body1">
-            <strong>Yorum Alanı</strong>
-          </Typography>
+          <CommentSection post={post}/>
           <Divider style={{ margin: "20px 0" }} />
         </div>
         <div style={{ marginLeft: "20px", maxWidth: "300px" }}>
