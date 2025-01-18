@@ -24,7 +24,8 @@ export default function PostDetail() {
   
   //console.log('posts',posts)
 
-  const recommendPosts = posts.filter(({ _id }) => _id !== post._id); //gelen datada bizim içinde olduğumuz postta olduğundan filteledik
+  const recommendPosts = posts?.filter(({ _id }) => _id && _id !== post?._id) || [];
+ //gelen datada bizim içinde olduğumuz postta olduğundan filteledik
   //console.log('recommendPosts',recommendPosts)
 
   const openPost = (_id) => {

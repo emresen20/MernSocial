@@ -1,7 +1,7 @@
 
 
 import * as api from '../api'
-import {CREATE,UPDATE,FETCH_ALL,LIKE,DELETE,FETCH_BY_SEARCH,START_LOADING,END_LOADING,FETCH_POST,FETCH_BY_TAGS} from '../constants/actionTypes'
+import {CREATE,UPDATE,FETCH_ALL,LIKE,DELETE,FETCH_BY_SEARCH,START_LOADING,END_LOADING,FETCH_POST,FETCH_BY_TAGS,COMMENT} from '../constants/actionTypes'
 
 export const getPosts= (page)=> async (dispatch)=>{
     try {
@@ -99,6 +99,8 @@ export const commentPost=(value,id)=> async (dispatch)=>{
     try {
         const {data}= await api.CreateCommnet(value,id);
         console.log(data);
+        dispatch({type:COMMENT,payload:data})
+        return data.comments
     } catch (error) {
         console.log(error)
     }

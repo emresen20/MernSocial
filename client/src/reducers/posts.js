@@ -1,5 +1,5 @@
 
-import {CREATE,UPDATE,FETCH_ALL,LIKE,DELETE,FETCH_BY_SEARCH,START_LOADING,END_LOADING,FETCH_POST,FETCH_BY_TAGS} from '../constants/actionTypes'
+import {CREATE,UPDATE,FETCH_ALL,LIKE,DELETE,FETCH_BY_SEARCH,START_LOADING,END_LOADING,FETCH_POST,FETCH_BY_TAGS,COMMENT} from '../constants/actionTypes'
 
 
 export default (state={isLoading:true,posts:[]},action)=>{
@@ -52,6 +52,17 @@ export default (state={isLoading:true,posts:[]},action)=>{
             return{
                 ...state,
                 posts:action.payload
+            }
+
+        case COMMENT:
+            return{
+                ...state,
+                posts:state.posts.map((post)=>{
+                    if(post._id=== action.payload._id){
+                        return action.payload
+                    }
+                    return post;
+                })
             }
                 
         default:
