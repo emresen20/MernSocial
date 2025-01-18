@@ -13,7 +13,7 @@ const auth = (req, res, next) => { //authorizationda baerer token kullanarak iş
     const decodedData = jwt.verify(token, 'emre-secret-key'); //token doğrulama
     req.userId = decodedData?.id; // isteğin içerisine userId bilgisini aktarıyoruz
 
-    next(); // İşleme devam et
+    next(); // İşleme devam et token yok ise dönemez
   } catch (error) {
     // Hata durumunda yanıt döndür
     console.log(error)
